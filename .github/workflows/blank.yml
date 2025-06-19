@@ -22,9 +22,7 @@ jobs:
       - name: make demo curl
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-          MY_VAR: "hellofrommyvar"
         run: |
-          echo $HOSTNAME
-          echo $MY_VAR
-          echo $NTFY_TOPIC | wc
-          curl -d hifromci ntfy.sh/"$NTFY_TOPIC" > /dev/null
+          URL="https://www.swisscom.ch/content/dam/swisscom/en/ws/documents/E_BBCS-Documents/e_bbcs_supporting-documentprovedequipment.pdf"
+          PDF_HASH=$(curl "$URL" | sha256sum)
+          curl -d "hash = $PDF_HASH" ntfy.sh/"$NTFY_TOPIC" > /dev/null
