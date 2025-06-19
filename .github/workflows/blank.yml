@@ -19,6 +19,8 @@ jobs:
 
     environment: ntfy secret
     steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
       - name: make demo curl
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
@@ -28,3 +30,4 @@ jobs:
           URL="https://www.swisscom.ch/content/dam/swisscom/en/ws/documents/E_BBCS-Documents/e_bbcs_supporting-documentprovedequipment.pdf"
           PDF_HASH=$(curl "$URL" | sha256sum)
           curl -d "hash = $PDF_HASH, ref $REF_HASH" ntfy.sh/"$NTFY_TOPIC" > /dev/null
+          [ "$PDF_HASH" == "$REF_HASH"] && echo hashmatch
