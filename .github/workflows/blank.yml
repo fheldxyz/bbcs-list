@@ -23,6 +23,7 @@ jobs:
         env:
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
         run: |
+          REF_HASH=$(cat e_bbcs_supporting-documentprovedequipment.pdf | sha256sum)
           URL="https://www.swisscom.ch/content/dam/swisscom/en/ws/documents/E_BBCS-Documents/e_bbcs_supporting-documentprovedequipment.pdf"
           PDF_HASH=$(curl "$URL" | sha256sum)
-          curl -d "hash = $PDF_HASH" ntfy.sh/"$NTFY_TOPIC" > /dev/null
+          curl -d "hash = $PDF_HASH, ref $REF_HASH" ntfy.sh/"$NTFY_TOPIC" > /dev/null
