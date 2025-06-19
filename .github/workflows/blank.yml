@@ -28,4 +28,4 @@ jobs:
           REF_HASH=$(cat e_bbcs_supporting-documentprovedequipment.pdf | sha256sum)
           URL="https://www.swisscom.ch/content/dam/swisscom/en/ws/documents/E_BBCS-Documents/e_bbcs_supporting-documentprovedequipment.pdf"
           PDF_HASH=$(curl "$URL" | sha256sum)
-          [ "$PDF_HASH" != "$REF_HASH" ] && curl -d "new update to router list: $URL" ntfy.sh/"$NTFY_TOPIC" > /dev/null
+          [ "$PDF_HASH" != "$REF_HASH" ] && curl -d "new update to router list: $URL" ntfy.sh/"$NTFY_TOPIC" > /dev/null || echo "pdf is unchanged"
